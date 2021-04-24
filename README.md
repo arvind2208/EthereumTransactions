@@ -57,4 +57,12 @@ Host the api by running the above command and fire the following request and mak
 	}
 ```
 
+## Swagger link
+Swagger link
+
+```
+    http://localhost:5000/swagger/index.html
+```
+
+
 
