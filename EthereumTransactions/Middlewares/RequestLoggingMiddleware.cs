@@ -5,15 +5,13 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace EthereumTransactions.Middlewares
 {
-    public class RequestLoggingMiddleware
+	public class RequestLoggingMiddleware
     {
         private readonly ILogger<RequestLoggingMiddleware> _logger;
         private readonly RequestDelegate _next;

@@ -35,6 +35,10 @@ namespace EthereumTransactions.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<IActionResult> SearchTransactionsAsync([FromQuery] TransactionSearchRequest request, CancellationToken token)
 		{
+			HttpContext.Items.TryGetValue("CorrelationId", out var correlationId);
+
+			_logger.LogInformation($"Search request for CorrelationId : {correlationId} Address: {request.Address} BlockNumber: {request.BlockNumber}");
+
 			var response = await _transactionSearchService.ExecuteAsync(request, token);
 
 			return Ok(response);
