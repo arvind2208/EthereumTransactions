@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
-using EthereumTransactions.Common.Exceptions;
 using EthereumTransactions.Models;
 using EthereumTransactions.Services.ThirdPartyServices.Infura;
 using Microsoft.Extensions.Logging;
+using Nethereum.Web3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,5 +1,4 @@
-﻿using EthereumTransactions.Common.Exceptions;
-using EthereumTransactions.Models;
+﻿using EthereumTransactions.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -22,7 +21,6 @@ namespace EthereumTransactions.Middlewares
 
 		public async Task InvokeAsync(HttpContext context)
 		{
-
 			try
 			{
 				await _next(context);
@@ -37,26 +35,13 @@ namespace EthereumTransactions.Middlewares
 		private async Task WriteResponseAsync(HttpContext context, Exception e)
 		{
 			context.Response.ContentType = "application/json";
-
-			string responseContent = null;
-
-			if (e is BaseHttpException)
-			{
-				var exception = (BaseHttpException)e;
-
-				context.Response.StatusCode = (int)exception.Result.HttpStatusCode;
-				responseContent = JsonConvert.SerializeObject(exception.Result);
-			}
-			else
-			{
-				_logger.LogError(e, "Unexpected error");
+			_logger.LogError(e, "Unexpected error");
 				var result = new ApiResult<object>
 				{
 					Message = "Unexpected error: " + e.Message
 				};
-				responseContent = JsonConvert.SerializeObject(result);
-				context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-			}
+			string responseContent = JsonConvert.SerializeObject(result);
+			context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
 			await context.Response.WriteAsync(responseContent);
 		}

@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -47,7 +45,7 @@ namespace EthereumTransactions.IntegrationTests
         {
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri($"{_client.BaseAddress}api/transactions?blockNumber=0000000&address=0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa"),
+                RequestUri = new Uri($"{_client.BaseAddress}api/transactions?blockNumber=9148874&address=0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa"),
                 Method = HttpMethod.Get
             };
 
@@ -67,6 +65,44 @@ namespace EthereumTransactions.IntegrationTests
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri($"{_client.BaseAddress}api/transactions?address=0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa"),
+                Method = HttpMethod.Get
+            };
+
+            var response = await _client.SendAsync(request);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task WhenInvalidAddressReturnsBadRequest()
+        {
+            var requestContent = new TransactionSearchRequest
+            {
+                Address = "0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa"
+            };
+
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"{_client.BaseAddress}api/transactions?blockNumber=9148874&address=0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7f"),
+                Method = HttpMethod.Get
+            };
+
+            var response = await _client.SendAsync(request);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task WhenInvalidBlockNumberReturnsBadRequest()
+        {
+            var requestContent = new TransactionSearchRequest
+            {
+                Address = "0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa"
+            };
+
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"{_client.BaseAddress}api/transactions?blockNumber=0000000&address=0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7f"),
                 Method = HttpMethod.Get
             };
 

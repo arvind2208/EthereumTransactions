@@ -20,7 +20,6 @@ namespace EthereumTransactions.Extensions
 					config
 						.AddJsonFile("appsettings.json", true, true)
 						.AddJsonFile($"appsettings.{env}.json", true, true)
-						//.AddSystemsManager($"/Ethereum/{env}", optional: true) // replace any secrets from a vault
 						.AddEnvironmentVariables();
 				})
 				.UseSerilog((context, loggerConfiguration) => { loggerConfiguration.Configure(context); });

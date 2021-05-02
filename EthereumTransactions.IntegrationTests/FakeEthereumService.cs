@@ -3,9 +3,7 @@ using EthereumTransactions.Services.ThirdPartyServices.Dtos.Infura;
 using EthereumTransactions.Services.ThirdPartyServices.Infura;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,7 +27,7 @@ namespace EthereumTransactions.IntegrationTests
 
 		public async Task<GetBlockByNumberResponse> GetBlockByNumberAsync(GetBlockByNumberRequest request, CancellationToken token)
 		{
-			if((string)request.Params[0] == "0X00")
+			if((string)request.Params[0] == "0X8B99CA")
 			{
 				throw new HttpRequestException("some error");
 			}

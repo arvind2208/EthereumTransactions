@@ -1,4 +1,3 @@
-using EthereumTransactions.Handlers;
 using EthereumTransactions.Middlewares;
 using EthereumTransactions.Options;
 using EthereumTransactions.Services;
@@ -22,7 +21,6 @@ namespace EthereumTransactions
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services
@@ -30,7 +28,6 @@ namespace EthereumTransactions
 				.Configure<EthereumOptions>(Configuration.GetSection("EthereumOptions"));
 
 			services
-				.AddTransient<LoggingMessageHandler>()
 			   .AddMvcCore()
 			   .AddDataAnnotations()
 			   .AddApiExplorer();
@@ -51,7 +48,6 @@ namespace EthereumTransactions
 			});
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			app.UseCors(
@@ -60,11 +56,10 @@ namespace EthereumTransactions
 								  .AllowAnyMethod()
 			);
 
-			// Enable middleware to serve generated Swagger as a JSON endpoint.
+			app.UseMiddleware<RequestLoggingMiddleware>();
+			
 			app.UseSwagger();
 
-			// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-			// specifying the Swagger JSON endpoint.
 			app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "EthereumTransactions API V1"); });
 
 			app.UseRouting();
